@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>7-Day Confidence Reset - Leo Forge Demo V2</title>
+  <style>
+    @page { size: A4; margin: 16mm; }
+    :root {
+      --ink: #151b17;
+      --muted: #647069;
+      --sage: #355a45;
+      --sage-2: #7d9b87;
+      --cream: #f7f1e7;
+      --soft: #eef4ef;
+      --paper: #fffdf8;
+      --gold: #b9874f;
+      --line: #d9dfda;
+      --deep: #22372b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: white;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.52;
+    }
+    .page {
+      min-height: 265mm;
+      page-break-after: always;
+      position: relative;
+      padding: 0;
+    }
+    .page:last-child { page-break-after: auto; }
+    .brand {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      font-size: 9px;
+      font-weight: 800;
+    }
+    .cover {
+      background: linear-gradient(135deg, var(--deep), var(--sage));
+      color: white;
+      padding: 24mm 19mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+    .cover:before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -120px;
+      top: -90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.12);
+    }
+    .cover:after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      left: -80px;
+      bottom: -90px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .cover-top, .cover-main, .cover-bottom { position: relative; z-index: 1; }
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      color: rgba(255,255,255,.78);
+    }
+    .brand-box {
+      border: 1px solid rgba(255,255,255,.36);
+      padding: 9px 11px;
+      border-radius: 4px;
+      text-align: right;
+      min-width: 176px;
+    }
+    .sample-line {
+      margin-top: 7px;
+      font-size: 10px;
+      letter-spacing: .8px;
+      text-transform: none;
+      font-weight: 500;
+      color: rgba(255,255,255,.74);
+    }
+    h1 {
+      font-size: 58px;
+      line-height: .98;
+      margin: 0 0 18px;
+      letter-spacing: 0;
+      max-width: 720px;
+    }
+    .subtitle {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 19px;
+      line-height: 1.42;
+      max-width: 590px;
+      color: rgba(255,255,255,.9);
+      margin-bottom: 22px;
+    }
+    .promise {
+      border-left: 3px solid rgba(255,255,255,.6);
+      padding-left: 15px;
+      max-width: 535px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: rgba(255,255,255,.78);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    h2 {
+      margin: 0 0 16px;
+      font-size: 28px;
+      line-height: 1.16;
+      color: var(--sage);
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 0 0 7px;
+      font-size: 18px;
+      color: var(--sage);
+    }
+    p {
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+    .label {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 9px;
+    }
+    .content { padding-top: 2mm; }
+    .panel {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 15px;
+      margin: 15px 0;
+    }
+    .cream {
+      background: var(--cream);
+      border-color: #e4d4bf;
+    }
+    .client-note {
+      font-family: Arial, Helvetica, sans-serif;
+      color: #4d493f;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 13px;
+    }
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px 14px;
+    }
+    .day {
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 5px;
+    }
+    .exercise {
+      background: white;
+      border-left: 4px solid var(--sage-2);
+      padding: 10px 11px;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .exercise strong, .asset strong {
+      display: block;
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-size: 9px;
+      color: var(--sage);
+      margin-bottom: 5px;
+    }
+    .line {
+      border-bottom: 1px solid #cbd4cf;
+      height: 19px;
+      margin-top: 7px;
+    }
+    ul, ol {
+      margin: 7px 0 0 18px;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 6px;
+      font-size: 13.5px;
+    }
+    .asset {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 13px;
+      margin-bottom: 10px;
+    }
+    .button {
+      display: inline-block;
+      background: var(--sage);
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 4px;
+      padding: 11px 16px;
+      margin-top: 8px;
+    }
+    .strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .mini {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 12px;
+      min-height: 96px;
+    }
+    .mini b {
+      color: var(--sage);
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+    .footer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-top: 1px solid var(--line);
+      padding-top: 7px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 8.5px;
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-top">
+      <div>
+        <div class="brand">Lead Magnet Demo</div>
+        <div class="sample-line">Sample Lead Magnet Created by Leo Forge</div>
+      </div>
+      <div class="brand-box">
+        <div class="brand">Your Coaching Brand Here</div>
+        <div class="sample-line">Mindset / Confidence Coaching</div>
+      </div>
+    </div>
+    <div class="cover-main">
+      <h1>7-Day Confidence Reset</h1>
+      <div class="subtitle">A Lead Magnet Demo for Mindset Coaches</div>
+      <div class="promise">A simple guide to help potential clients rebuild self-trust through small daily proof before inviting them to book a clarity call.</div>
+    </div>
+    <div class="cover-bottom brand">Portfolio Sample for Coaches and Consultants</div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Introduction</div>
+      <h2>Confidence Is Built Through Proof</h2>
+      <p>Confidence is not something people wait for until it magically appears. It is built through small proof: small promises kept, small actions completed, and small moments where a person chooses movement over hesitation.</p>
+      <p>Many potential coaching clients already know what they want to change. What they need first is a simple, safe first step that helps them see the pattern more clearly and experience a little momentum.</p>
+      <p>This 7-day reset gives them that first step. It is not designed to replace coaching. It is designed to create trust, help the reader feel understood, and naturally invite the next conversation.</p>
+      <div class="panel">
+        <h3>How to Use This Guide</h3>
+        <p>Set aside 10 minutes each day. Read the short lesson, complete the exercise, and choose one tiny action that proves you can move with more honesty, steadiness, and self-respect.</p>
+      </div>
+      <div class="panel cream client-note">
+        This is a sample lead magnet created to show how a coach or consultant can give potential clients a helpful first step before inviting them to book a clarity call.
+      </div>
+      <div class="strip">
+        <div class="mini"><b>Purpose</b>Build trust before the sales conversation.</div>
+        <div class="mini"><b>Format</b>Short PDF guide with practical daily prompts.</div>
+        <div class="mini"><b>Next Step</b>Invite the reader to book a free clarity call.</div>
+      </div>
+    </div>
+    <div class="footer"><span>Your Coaching Brand Here</span><span>7-Day Confidence Reset</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Portfolio Context</div>
+      <h2>What This Demo Shows</h2>
+      <p>This demo shows how a coach or consultant can use a simple PDF guide as a trust-building bridge between social content and a booked call.</p>
+      <p>A strong lead magnet does not need to explain everything the coach knows. It should give the reader a useful first win, clarify the problem, and make the next step feel natural.</p>
+      <div class="grid">
+        <div class="card"><h3>Niche</h3><p>A client version can be written for mindset coaching, fitness coaching, business consulting, real estate, wellness education, course creators, or another clear niche.</p></div>
+        <div class="card"><h3>Audience</h3><p>The language can be adapted for beginners, busy professionals, creators, parents, founders, executives, students, or any specific buyer group.</p></div>
+        <div class="card"><h3>Offer</h3><p>The final CTA can point toward a clarity call, discovery call, paid consultation, group program, webinar, email list, or product page.</p></div>
+        <div class="card"><h3>Voice</h3><p>The tone can be calm, direct, warm, premium, bold, educational, practical, or aligned with the client's existing brand voice.</p></div>
+        <div class="card"><h3>Booking CTA</h3><p>The guide can be designed to prepare the reader for the exact next action the coach wants them to take.</p></div>
+        <div class="card"><h3>Brand Style</h3><p>Colors, titles, page structure, and positioning can match the coach's visual identity and offer style.</p></div>
+      </div>
+    </div>
+    <div class="footer"><span>Created by Leo Forge</span><span>What This Demo Shows</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Days 1-2</div>
+      <h2>Notice the Pattern</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="day">Day 1</div>
+          <h3>Spot the Confidence Loop</h3>
+          <p>Self-doubt often follows a familiar loop: a situation appears, fear rises, the mind predicts judgment or failure, and avoidance feels safer than action.</p>
+          <p>The first step is noticing the loop before trying to fight it.</p>
+          <div class="exercise"><strong>Exercise</strong>Write down one situation where self-doubt usually stops you.<div class="line"></div><div class="line"></div><div class="line"></div></div>
+        </div>
+        <div class="card">
+          <div class="day">Day 2</div>
+          <h3>Name the Inner Critic</h3>
+          <p>The inner critic becomes stronger when it stays vague. Naming the exact sentence helps you see it as a thought pattern, not as the truth.</p>
+          <p>Clarity gives you distance. Distance gives you choice.</p>
+          <div class="exercise"><strong>Exercise</strong>Write the exact sentence your inner critic repeats most often.<div class="line"></div><div class="line"></div><div class="line"></div></div>
+        </div>
+      </div>
+      <div class="panel"><h3>Coach Note</h3><p>This section helps the reader feel seen without overwhelming them. It opens the door for a coach to later help them work through the deeper pattern.</p></div>
+    </div>
+    <div class="footer"><span>Your Coaching Brand Here</span><span>Days 1-2</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Days 3-4</div>
+      <h2>Create New Evidence</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="day">Day 3</div>
+          <h3>Separate Fear From Fact</h3>
+          <p>Fear can sound logical when it is trying to protect you. A useful reset begins by asking whether the thought is evidence-based or protection-based.</p>
+          <p>You do not have to shame fear. You only have to check whether it is telling the whole truth.</p>
+          <div class="exercise"><strong>Exercise</strong>Ask: "Is this a fact, or is this fear trying to protect me?"<div class="line"></div><div class="line"></div><div class="line"></div></div>
+        </div>
+        <div class="card">
+          <div class="day">Day 4</div>
+          <h3>Choose One Small Proof Action</h3>
+          <p>Confidence grows when your actions give your mind new evidence. Choose an action small enough that you can complete it today.</p>
+          <p>The action does not need to impress anyone. It only needs to be real.</p>
+          <div class="exercise"><strong>Exercise</strong>Pick one tiny action that proves you can move even while doubt is present.<div class="line"></div><div class="line"></div><div class="line"></div></div>
+        </div>
+      </div>
+      <div class="panel"><h3>Small Proof Examples</h3><p>Send the email. Ask the question. Record the short video. Make the call. Finish the page. Speak up once. Keep the promise you normally postpone.</p></div>
+    </div>
+    <div class="footer"><span>Your Coaching Brand Here</span><span>Days 3-4</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Days 5-7</div>
+      <h2>Build the Next Standard</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="day">Day 5</div>
+          <h3>Stop Waiting to Feel Ready</h3>
+          <p>Readiness is often the result of action, not the requirement for it. Today, practice beginning before the feeling fully arrives.</p>
+          <div class="exercise"><strong>Exercise</strong>Take the action before the feeling arrives.<div class="line"></div><div class="line"></div></div>
+        </div>
+        <div class="card">
+          <div class="day">Day 6</div>
+          <h3>Keep One Promise</h3>
+          <p>Self-trust is built when your word to yourself becomes reliable. Make the promise small, specific, and possible.</p>
+          <div class="exercise"><strong>Exercise</strong>Choose one small promise and keep it today.<div class="line"></div><div class="line"></div></div>
+        </div>
+        <div class="card">
+          <div class="day">Day 7</div>
+          <h3>Build Your Next Standard</h3>
+          <p>A standard is a way you decide to show up repeatedly. It should be clear enough to practice and grounded enough to keep.</p>
+          <div class="exercise"><strong>Exercise</strong>Write one standard you want to live by for the next 7 days.<div class="line"></div><div class="line"></div></div>
+        </div>
+        <div class="card">
+          <div class="day">Reflection</div>
+          <h3>Your Evidence List</h3>
+          <p>List three pieces of proof you created this week. They do not need to be dramatic. They only need to be real.</p>
+          <div class="line"></div><div class="line"></div><div class="line"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>Your Coaching Brand Here</span><span>Days 5-7</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Next Step</div>
+      <h2>Ready for More Personal Support?</h2>
+      <p>Want help rebuilding your confidence with a personalized coaching plan?</p>
+      <p>Book a free clarity call and discover the small patterns that are keeping you stuck, and the next steps to rebuild self-trust, confidence, and consistent action.</p>
+      <div class="panel">
+        <h3>What a Clarity Call Can Help You See</h3>
+        <ul>
+          <li>The situation where self-doubt is costing you the most energy.</li>
+          <li>The repeating thought pattern that keeps you hesitating.</li>
+          <li>The small confidence-building action that would create momentum now.</li>
+          <li>The next coaching step that fits your current season of life or business.</li>
+        </ul>
+        <div class="button">[Book Your Free Clarity Call]</div>
+      </div>
+      <p style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: var(--muted);">This guide is educational and reflective. It is not medical advice, therapy, diagnosis, or treatment.</p>
+    </div>
+    <div class="footer"><span>Your Coaching Brand Here</span><span>Free Clarity Call CTA</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Landing Page Copy</div>
+      <h2>Promote the Free Guide</h2>
+      <div class="asset"><strong>Hero Headline</strong><p>Rebuild confidence through 7 small daily proof actions.</p></div>
+      <div class="asset"><strong>Subheadline</strong><p>Download the free 7-Day Confidence Reset and learn how to spot self-doubt, interrupt hesitation, and begin building self-trust through small promises kept.</p></div>
+      <div class="grid">
+        <div class="asset"><strong>What You Will Learn</strong><ul><li>How to notice the loop behind self-doubt.</li><li>How to separate fear from fact.</li><li>How to choose one small action before you feel ready.</li><li>How to rebuild self-trust through promises you can actually keep.</li></ul></div>
+        <div class="asset"><strong>Who It Is For</strong><p>This guide is for thoughtful people who want to stop waiting for perfect confidence and start building steadier action, one small proof point at a time.</p></div>
+      </div>
+      <div class="asset"><strong>CTA</strong><p>Get the free guide and start your 7-day confidence reset today.</p></div>
+    </div>
+    <div class="footer"><span>Created by Leo Forge</span><span>Landing Page Copy</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Email Follow-Up Ideas</div>
+      <h2>5 Emails After Download</h2>
+      <ol>
+        <li><strong>Welcome + guide delivery:</strong> Send the PDF, explain how to use it in 10 minutes per day, and invite the reader to reply with the situation where confidence feels hardest.</li>
+        <li><strong>The self-doubt loop:</strong> Teach why confidence disappears in predictable moments and ask the reader to identify their most common trigger.</li>
+        <li><strong>Small proof over big pressure:</strong> Explain why tiny actions rebuild trust better than dramatic promises, then suggest one small action for today.</li>
+        <li><strong>The cost of waiting to feel ready:</strong> Show how waiting for certainty keeps people stuck, then introduce the idea of taking action with doubt still present.</li>
+        <li><strong>Clarity call invitation:</strong> Invite the reader to book a free call to identify their confidence pattern and choose a personalized next step.</li>
+      </ol>
+      <div class="panel"><h3>How a Coach Uses This</h3><p>The PDF starts the relationship. The follow-up emails continue the conversation. The clarity call invitation gives the reader a clear next step without fake pressure.</p></div>
+    </div>
+    <div class="footer"><span>Created by Leo Forge</span><span>Email Follow-Up Ideas</span></div>
+  </section>
+
+  <section class="page">
+    <div class="content">
+      <div class="label">Social Hooks</div>
+      <h2>15 Hooks to Promote the Free Guide</h2>
+      <div class="grid">
+        <ul>
+          <li>Confidence is built after action, not before it.</li>
+          <li>Stop waiting to feel ready. Start with one small proof.</li>
+          <li>Your inner critic gets weaker when you name it clearly.</li>
+          <li>Self-doubt is a loop. You can learn where it starts.</li>
+          <li>One promise kept can rebuild more trust than one big plan.</li>
+          <li>If fear sounds like fact, ask this one question.</li>
+          <li>You do not need perfect confidence to take the next step.</li>
+          <li>Want steadier confidence? Start with a 7-day reset.</li>
+        </ul>
+        <ul>
+          <li>The smallest action can become your first proof point.</li>
+          <li>Confidence grows when your behavior gives your mind new evidence.</li>
+          <li>This free guide helps you rebuild self-trust in 10 minutes a day.</li>
+          <li>Hesitation is not your identity. It is a pattern.</li>
+          <li>Try this before you believe every self-critical thought.</li>
+          <li>Your next standard starts with one kept promise.</li>
+          <li>Download the 7-Day Confidence Reset and begin today.</li>
+        </ul>
+      </div>
+      <div class="panel cream client-note">In a client project, these hooks would be rewritten around the coach's specific niche, promise, audience language, and content platform.</div>
+    </div>
+    <div class="footer"><span>Created by Leo Forge</span><span>Social Hooks</span></div>
+  </section>
+</body>
+</html>
